@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <!-- <link href="hover.css" rel="stylesheet" type="text/css" media="all"> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+        
+    <title>Quodophile</title>
+    <style>
+        .hvr-grow-shadow {
+            display: inline-block;
+            vertical-align: middle;
+            -webkit-transform: perspective(1px) translateZ(0);
+            transform: perspective(1px) translateZ(0);
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+            -webkit-transition-duration: 0.3s;
+            transition-duration: 0.3s;
+            -webkit-transition-property: box-shadow, transform;
+            transition-property: box-shadow, transform;
+        }
+        .hvr-grow-shadow:hover, .hvr-grow-shadow:focus, .hvr-grow-shadow:active {
+            box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+            -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+        }
+
+        .error{
+            color:Tomato;
+            font-family: cursive;
+            text-align: center;
+        }
+        .buton{
+            background-color: #3f46ad;
+            color:white;
+            padding:20%;
+        }
+        .navt {
+            padding-top:30px;
+        }
+        a:hover{
+            text-decoration: none;
+            
+        }
+        a{
+            color:#3f46ad;
+        }
+        .error {
+            color:Tomato;
+            text-align: center;
+        }
+        .style{
+            width: 20rem;
+            background-color: #FBFCFC;
+            padding:3%;
+            text-align: center;
+            border:1px solid #D0D3D4;
+            border-radius:10px;
+            border-top:6px solid #7B7D7D;  
+        }
+        .margin{
+            margin-left:1%;
+            margin-bottom: 3%;
+            margin-top:2%;
+        }
+    </style>
+</head>
+<body class="container">
+    <div class="row">
+        <div class="col-sm-11">
+            <h1 class="navt">Quodophile</h1>
+        </div>
+        <div class="col-sm-1">
+            <div class="dropdown navt">
+                <button class="btn buton rounded-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{first|capfirst }} {{last|capfirst}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/add">Add Quote</a>
+                    <a class="dropdown-item" href="/myaccount/{{user.id}}">Update Profile</a>
+                    <a class="dropdown-item" href="/logout" >Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <br>
+    
+    
+    <div class="row margin">
+        {%for q in quote%}
+        <div class="col-sm-4">
+            <form action="/like/{{user.id}}/{{q.id}}" method='POST'>
+                {% csrf_token %} 
+                <div class="hvr-grow-shadow">
+                    {%if user.id == q.users_id %}
+                    <div class="card style" style="border-top:6px solid #3f46ad">
+                    {%endif%}
+                    {%if user.id != q.users_id %}
+                    <div class="card style">
+                    {%endif%}    
+                        <div class="card-body">
+                            <h5 class="card-title">{{q.author|title}}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">"{{q.quote|title}}"</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Posted by : <a href="/user/{{q.users.id}}">{{q.users.first_name|capfirst }} {{q.users.last_name|capfirst }}</a></h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{q.like}} people like this</h6>
+                            <button class="btn btn-outline-success">Like!</button>
+                            {%if user.id == q.users_id %}
+                            <a class="btn btn-outline-danger" href="/delete/{{q.id}}">Delete</a>
+                            {%endif%}
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </form>
+            <br><br>
+        </div>
+        {%endfor%}
+    </div>
+        
+</body>
+</html>

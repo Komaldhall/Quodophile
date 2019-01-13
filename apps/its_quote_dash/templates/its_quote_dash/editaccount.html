@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <title>Quodophile</title>
+    <style>
+       .navt {
+            padding-top:30px;
+        }
+        .buton{
+            background-color: #3f46ad;
+            color:white;
+            padding:20%;
+        }
+        .error {
+            color:Tomato;
+            text-align: center;
+        } 
+        .back{
+            background-color: #FBFCFC;
+            padding:3%;
+            text-align: center;
+            border:1px solid #D0D3D4;
+            border-radius:5px;
+        }
+        .cov{
+            margin-left:10%;
+        }
+        
+    </style>
+</head>
+<body class="container">
+    <div class="row">
+        <div class="col-sm-11">
+            <h1 class="navt">Quodophile</h1>
+        </div>
+        <div class="col-sm-1">
+            <div class="dropdown navt">
+                <button class="btn buton rounded-circle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{first|capfirst }} {{last|capfirst}}
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item"  href="/dashboard">Dashboard</a>
+                    <a class="dropdown-item" href="/logout" >Log Out</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <br>
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6 back">
+            <h5>{{user.first_name|capfirst}} {{user.last_name|capfirst}}'s profile</h5>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="error">*{{ message }}</div>
+            {% endfor %}
+            {% endif %}
+            <br>
+            <form action='/myaccount/{{user.id}}', method='POST'>
+                {% csrf_token %}
+                <div class="cov">
+                    <div class="form-group row">
+                        <label for="fname" class="col-sm-4 col-form-label">First Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="fname" value="{{user.first_name}}" name="first_name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="lname" class="col-sm-4 col-form-label">Last Name</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="lname" value="{{user.last_name}}" name="last_name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="birth" class="col-sm-4 col-form-label">Birthday</label>
+                        <div class="col-sm-6">
+                            <input type="date" class="form-control" id="birth" value="{{user.birth}}" name="birthday" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-4 col-form-label">Email</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="email" value="{{user.email}}" name="email" required>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-warning">Update</button>
+            </form>
+        </div>
+        <div class="col-sm-3"></div>
+        </div>
+</body>
+
+</html>

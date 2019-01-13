@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+    <title>Quodophile</title>
+    <style>
+        .buton{
+            background-color: #3f46ad;
+            color:white;
+            padding:15%;
+        }
+        .navt {
+            padding-top:30px;
+        }
+        a:hover{
+            text-decoration: none;
+            
+        }
+        a{
+            color:#3f46ad;
+        }
+        .error {
+            color:Tomato;
+            text-align: center;
+        }
+        .back{
+            background-color: #FBFCFC;
+            padding:3%;
+            text-align: center;
+            border:1px solid #D0D3D4;
+            border-radius:5px;
+        }
+        .align{
+            margin-left:15%;
+        }
+        .sign{
+            margin-top:30%;
+        }
+    </style>
+</head>
+<body class="container">
+    <div class="row">
+        <div class="col-sm-11">
+            <h1 class="navt">Quodophile</h1>
+        </div>
+        <div class="col-sm-1">
+            <div class="navt sign">
+                <a href="/">Sign In</a>
+            </div>
+        </div>
+        <br><br>
+    </div>
+    <hr>
+    <br>
+    
+    <div class="row">
+        <div class="col-sm-3"></div>
+        <div class="col-sm-6 back">
+        <h3>Sign in to your collection</h3>
+        <span class="error">
+            {% if messages %}
+            {% for message in messages %}
+            *{{ message }}<br>
+            {% endfor %}
+            {% endif %}
+        </span>
+        <br>
+        <form action="/signup" method='POST'>
+            {%csrf_token%}
+            <div class="align">
+            <div class="form-row">
+                <div class="form-group col-md-5">
+                <input type="text" class="form-control" name="first_name" placeholder="First name" required>
+                </div>
+                <div class="form-group col-md-5">
+                <input type="text" class="form-control" name="last_name" placeholder="Last name" required>
+                </div>
+            </div>
+            <div class="form-row"> 
+                <div class="form-group col-md-10">
+                    <input type="email" class="form-control" name="email" placeholder="Email Address" required>
+                </div>
+            </div>
+            <div class="form-row"> 
+                <div class="form-group col-md-10">
+                    <input type="date" class="form-control" name="birthday" placeholder="Birthday" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-10">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-10">
+                    <input type="password" class="form-control" name= "cpassword" placeholder="Confirm Password" required>
+                </div>
+            </div>
+            </div>
+            <button class="btn btn-success">Register</button>
+        </form>
+        </div>
+        
+        <div class="col-sm-3"></div>
+    </div>
+</div>
+</body>
+</html>
